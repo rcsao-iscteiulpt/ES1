@@ -8,6 +8,6 @@
 	<classpathentry kind="lib" path="jMetal/jmetal-algorithm-5.3.jar"/>
 	<classpathentry kind="lib" path="jMetal/jmetal-core-5.3.jar"/>
 	<classpathentry kind="lib" path="jMetal/jmetal-exec-5.3.jar"/>
-	<classpathentry kind="lib" path="jMetal/jmetal-problem-5.3.jar"/>
+	<classpathentry kind="lib" path="jMetal/jmetal-problem-5.3.jar"></classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
