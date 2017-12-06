@@ -279,7 +279,6 @@ public class Window {
 		
 		JButton set_Path_Rules = new JButton("Set Path");
 		set_Path_Rules.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		System.out.println("sdgnegfregfnferwgfngf");
 		set_Path_Rules.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
