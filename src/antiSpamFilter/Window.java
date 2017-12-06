@@ -312,7 +312,7 @@ public class Window {
 		
 		
 		
-		set_Path_Rules.setBackground(Color.PINK);
+		set_Path_Rules.setBackground(new Color(192, 192, 192));
 		set_Path_Rules.setForeground(Color.BLACK);
 		panel_change_buttons.add(set_Path_Rules);
 		
