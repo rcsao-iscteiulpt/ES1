@@ -8,24 +8,31 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.FlowLayout;
 import javax.swing.JSplitPane;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.Font;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class Window {
 
 	private JFrame frame;
-	private JTextField Path_rules;
-	private JTextField Path_Spam;
-	private JTextField Path_Ham;
+	private JTextField path_Rules;
+	private JTextField path_Spam;
+	private JTextField path_Ham;
 
 	/**
 	 * Launch the application.
@@ -75,7 +82,7 @@ public class Window {
 		gbc_panel_paths_files.gridy = 0;
 		frame.getContentPane().add(panel_paths_files, gbc_panel_paths_files);
 		GridBagLayout gbl_panel_paths_files = new GridBagLayout();
-		gbl_panel_paths_files.columnWidths = new int[]{496, 173, 308, 0};
+		gbl_panel_paths_files.columnWidths = new int[]{496, 199, 308, 0};
 		gbl_panel_paths_files.rowHeights = new int[]{257, 0};
 		gbl_panel_paths_files.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel_paths_files.rowWeights = new double[]{0.0, Double.MIN_VALUE};
@@ -91,23 +98,26 @@ public class Window {
 		panel_paths_files.add(panel_paths, gbc_panel_paths);
 		panel_paths.setLayout(new GridLayout(3, 0, 1, 20));
 		
-		Path_rules = new JTextField();
-		Path_rules.setEditable(false);
-		Path_rules.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		Path_rules.setHorizontalAlignment(SwingConstants.CENTER);
-		Path_rules.setText("adasda");
-		panel_paths.add(Path_rules);
-		Path_rules.setColumns(10);
+		path_Rules = new JTextField();
+		path_Rules.setEditable(false);
+		path_Rules.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		path_Rules.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_paths.add(path_Rules);
+		path_Rules.setColumns(10);
 		
-		Path_Spam = new JTextField();
-		Path_Spam.setEditable(false);
-		panel_paths.add(Path_Spam);
-		Path_Spam.setColumns(10);
+		path_Spam = new JTextField();
+		path_Spam.setHorizontalAlignment(SwingConstants.CENTER);
+		path_Spam.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		path_Spam.setEditable(false);
+		panel_paths.add(path_Spam);
+		path_Spam.setColumns(10);
 		
-		Path_Ham = new JTextField();
-		Path_Ham.setEditable(false);
-		panel_paths.add(Path_Ham);
-		Path_Ham.setColumns(10);
+		path_Ham = new JTextField();
+		path_Ham.setHorizontalAlignment(SwingConstants.CENTER);
+		path_Ham.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		path_Ham.setEditable(false);
+		panel_paths.add(path_Ham);
+		path_Ham.setColumns(10);
 		
 		JPanel panel_change_buttons = new JPanel();
 		panel_change_buttons.setBackground(Color.BLACK);
@@ -118,23 +128,6 @@ public class Window {
 		gbc_panel_change_buttons.gridy = 0;
 		panel_paths_files.add(panel_change_buttons, gbc_panel_change_buttons);
 		panel_change_buttons.setLayout(new GridLayout(3, 0, 0, 20));
-		
-		JButton Change_Path_Rules = new JButton("Change Path");
-		Change_Path_Rules.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		
-		
-		Change_Path_Rules.setBackground(Color.BLACK);
-		Change_Path_Rules.setForeground(Color.BLACK);
-		panel_change_buttons.add(Change_Path_Rules);
-		
-		JButton Change_Path_Spam = new JButton("Change Path");
-		panel_change_buttons.add(Change_Path_Spam);
-		
-		JButton Change_Path_Ham = new JButton("Change Path");
-		panel_change_buttons.add(Change_Path_Ham);
 		
 		JPanel panel_files_names = new JPanel();
 		panel_files_names.setBackground(Color.BLACK);
@@ -189,51 +182,25 @@ public class Window {
 		GridBagLayout gbl_panel_left = new GridBagLayout();
 		gbl_panel_left.columnWidths = new int[]{543, 132, 0};
 		gbl_panel_left.rowHeights = new int[]{195, 59, 0};
-		gbl_panel_left.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_left.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_left.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_panel_left.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		panel_left.setLayout(gbl_panel_left);
 		
+		JScrollPane scrollPane_rules_manual = new JScrollPane();
+		scrollPane_rules_manual.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane_rules_manual.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		GridBagConstraints gbc_scrollPane_rules_manual = new GridBagConstraints();
+		gbc_scrollPane_rules_manual.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_rules_manual.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane_rules_manual.gridx = 0;
+		gbc_scrollPane_rules_manual.gridy = 0;
+		panel_left.add(scrollPane_rules_manual, gbc_scrollPane_rules_manual);
+		
 		JTextArea list_rules_manual = new JTextArea();
-		GridBagConstraints gbc_list_rules_manual = new GridBagConstraints();
-		gbc_list_rules_manual.fill = GridBagConstraints.BOTH;
-		gbc_list_rules_manual.insets = new Insets(0, 0, 5, 5);
-		gbc_list_rules_manual.gridx = 0;
-		gbc_list_rules_manual.gridy = 0;
-		panel_left.add(list_rules_manual, gbc_list_rules_manual);
-		
-		JTextArea rules_weight_manual = new JTextArea();
-		GridBagConstraints gbc_rules_weight_manual = new GridBagConstraints();
-		gbc_rules_weight_manual.fill = GridBagConstraints.BOTH;
-		gbc_rules_weight_manual.insets = new Insets(0, 0, 5, 0);
-		gbc_rules_weight_manual.gridx = 1;
-		gbc_rules_weight_manual.gridy = 0;
-		panel_left.add(rules_weight_manual, gbc_rules_weight_manual);
-		
-		JLabel label_results_manual = new JLabel("FP:           FN:");
-		label_results_manual.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		label_results_manual.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_label_results_manual = new GridBagConstraints();
-		gbc_label_results_manual.fill = GridBagConstraints.BOTH;
-		gbc_label_results_manual.insets = new Insets(0, 0, 0, 5);
-		gbc_label_results_manual.gridx = 0;
-		gbc_label_results_manual.gridy = 1;
-		panel_left.add(label_results_manual, gbc_label_results_manual);
-		
-		JPanel panel_right = new JPanel();
-		GridBagConstraints gbc_panel_right = new GridBagConstraints();
-		gbc_panel_right.fill = GridBagConstraints.BOTH;
-		gbc_panel_right.gridx = 1;
-		gbc_panel_right.gridy = 0;
-		panel_manual_conf.add(panel_right, gbc_panel_right);
-		panel_right.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		JButton button_avaliar = new JButton("Avaliar Configuracao Manual");
-		button_avaliar.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_right.add(button_avaliar);
-		
-		JButton button_gravar_manual = new JButton("Gravar Configuracao Manual");
-		button_gravar_manual.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel_right.add(button_gravar_manual);
+		list_rules_manual.setFont(new Font("Monospaced", Font.PLAIN, 16));
+		list_rules_manual.setEditable(false);
+		list_rules_manual.setLineWrap(true);
+		scrollPane_rules_manual.setViewportView(list_rules_manual);
 		
 		JPanel panel_auto_conf = new JPanel();
 		GridBagConstraints gbc_panel_auto_conf = new GridBagConstraints();
@@ -262,21 +229,30 @@ public class Window {
 		gbl_panel_up.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panel_up.setLayout(gbl_panel_up);
 		
+		JScrollPane scrollPane_rules_auto = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_rules_auto = new GridBagConstraints();
+		gbc_scrollPane_rules_auto.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_rules_auto.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane_rules_auto.gridx = 0;
+		gbc_scrollPane_rules_auto.gridy = 0;
+		panel_up.add(scrollPane_rules_auto, gbc_scrollPane_rules_auto);
+		
 		JTextArea list_rules_auto = new JTextArea();
-		GridBagConstraints gbc_list_rules_auto = new GridBagConstraints();
-		gbc_list_rules_auto.fill = GridBagConstraints.BOTH;
-		gbc_list_rules_auto.insets = new Insets(0, 0, 5, 5);
-		gbc_list_rules_auto.gridx = 0;
-		gbc_list_rules_auto.gridy = 0;
-		panel_up.add(list_rules_auto, gbc_list_rules_auto);
+		list_rules_auto.setFont(new Font("Monospaced", Font.PLAIN, 16));
+		scrollPane_rules_auto.setViewportView(list_rules_auto);
+		list_rules_auto.setEditable(false);
+		
+		JScrollPane scrollPane_weight_auto = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_weight_auto = new GridBagConstraints();
+		gbc_scrollPane_weight_auto.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_weight_auto.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane_weight_auto.gridx = 1;
+		gbc_scrollPane_weight_auto.gridy = 0;
+		panel_up.add(scrollPane_weight_auto, gbc_scrollPane_weight_auto);
 		
 		JTextArea rules_weight_auto = new JTextArea();
-		GridBagConstraints gbc_rules_weight_auto = new GridBagConstraints();
-		gbc_rules_weight_auto.fill = GridBagConstraints.BOTH;
-		gbc_rules_weight_auto.insets = new Insets(0, 0, 5, 0);
-		gbc_rules_weight_auto.gridx = 1;
-		gbc_rules_weight_auto.gridy = 0;
-		panel_up.add(rules_weight_auto, gbc_rules_weight_auto);
+		rules_weight_auto.setFont(new Font("Monospaced", Font.PLAIN, 16));
+		scrollPane_weight_auto.setViewportView(rules_weight_auto);
 		
 		JLabel label_results_auto = new JLabel("FP:           FN:");
 		label_results_auto.setHorizontalAlignment(SwingConstants.CENTER);
@@ -300,6 +276,124 @@ public class Window {
 		gbl_panel_down.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gbl_panel_down.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panel_down.setLayout(gbl_panel_down);
+		
+		JButton set_Path_Rules = new JButton("Set Path");
+		set_Path_Rules.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		System.out.println("sdgnegfregfnferwgfngf");
+		set_Path_Rules.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				 JFileChooser chooser = new JFileChooser("C:\\Users\\ricardo\\Desktop");
+				 FileNameExtensionFilter filter = new FileNameExtensionFilter("Configuration files","log", "cf");
+				 chooser.setFileFilter(filter);
+				 int returnVal = chooser.showOpenDialog(null);
+				 if(returnVal == JFileChooser.APPROVE_OPTION) {
+					 File file = chooser.getSelectedFile();
+					 String path = file.getAbsolutePath();
+					 path_Rules.setText(path);
+					 
+					 try {
+						Scanner s = new Scanner(file);
+						String rules = "";
+						while(s.hasNextLine()) {
+							rules += s.nextLine() + "\n";
+						}
+						list_rules_manual.setText(rules);
+						list_rules_auto.setText(rules);
+					} catch (FileNotFoundException e1) {
+						
+						e1.printStackTrace();
+					}
+				 }
+				 
+			}
+			
+		});
+		
+		
+		
+		set_Path_Rules.setBackground(Color.PINK);
+		set_Path_Rules.setForeground(Color.BLACK);
+		panel_change_buttons.add(set_Path_Rules);
+		
+		JButton set_Path_Spam = new JButton("Set Path");
+		set_Path_Spam.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				 JFileChooser chooser = new JFileChooser("C:\\Users\\ricardo\\Desktop");
+				 FileNameExtensionFilter filter = new FileNameExtensionFilter("Configuration files","log", "cf");
+				 chooser.setFileFilter(filter);
+				 int returnVal = chooser.showOpenDialog(null);
+				 if(returnVal == JFileChooser.APPROVE_OPTION) {
+					 File file = chooser.getSelectedFile();
+					 String path = file.getAbsolutePath();
+					 path_Spam.setText(path);
+				    }
+			}
+		});
+		set_Path_Spam.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		panel_change_buttons.add(set_Path_Spam);
+		
+		JButton set_Path_Ham = new JButton("Set Path");
+		set_Path_Ham.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				 JFileChooser chooser = new JFileChooser("C:\\Users\\ricardo\\Desktop");
+				 FileNameExtensionFilter filter = new FileNameExtensionFilter("Configuration files","log", "cf");
+				 chooser.setFileFilter(filter);
+				 int returnVal = chooser.showOpenDialog(null);
+				 if(returnVal == JFileChooser.APPROVE_OPTION) {
+					 File file = chooser.getSelectedFile();
+					 String path = file.getAbsolutePath();
+					 path_Ham.setText(path);
+				    }
+			}
+			
+		});
+		set_Path_Ham.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		panel_change_buttons.add(set_Path_Ham);
+		
+		JScrollPane scrollPane_weight_manual = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_weight_manual = new GridBagConstraints();
+		gbc_scrollPane_weight_manual.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_weight_manual.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane_weight_manual.gridx = 1;
+		gbc_scrollPane_weight_manual.gridy = 0;
+		panel_left.add(scrollPane_weight_manual, gbc_scrollPane_weight_manual);
+		
+		
+		
+		JTextArea rules_weight_manual = new JTextArea();
+		scrollPane_weight_manual.setViewportView(rules_weight_manual);
+		rules_weight_manual.setFont(new Font("Monospaced", Font.PLAIN, 16));
+		
+		JLabel label_results_manual = new JLabel("FP:           FN:");
+		label_results_manual.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		label_results_manual.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_label_results_manual = new GridBagConstraints();
+		gbc_label_results_manual.fill = GridBagConstraints.BOTH;
+		gbc_label_results_manual.insets = new Insets(0, 0, 0, 5);
+		gbc_label_results_manual.gridx = 0;
+		gbc_label_results_manual.gridy = 1;
+		panel_left.add(label_results_manual, gbc_label_results_manual);
+		
+		JPanel panel_right = new JPanel();
+		GridBagConstraints gbc_panel_right = new GridBagConstraints();
+		gbc_panel_right.fill = GridBagConstraints.BOTH;
+		gbc_panel_right.gridx = 1;
+		gbc_panel_right.gridy = 0;
+		panel_manual_conf.add(panel_right, gbc_panel_right);
+		panel_right.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JButton button_avaliar = new JButton("Avaliar Configuracao Manual");
+		button_avaliar.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		panel_right.add(button_avaliar);
+		
+		JButton button_gravar_manual = new JButton("Gravar Configuracao Manual");
+		button_gravar_manual.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		panel_right.add(button_gravar_manual);
+		
+		
 		
 		JButton button_gerar_conf = new JButton("Gerar Configuracao Autom\u00E1tica");
 		GridBagConstraints gbc_button_gerar_conf = new GridBagConstraints();
